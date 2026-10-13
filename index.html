@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nepal Crop Production & Environmental Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">🌿</div>
+        <div><strong>AgriNepal</strong><small>Crop & Environment Analytics</small></div>
+        <button class="mobile-close" id="closeMenu" aria-label="Close menu">×</button>
+      </div>
+      <div class="side-label">WORKSPACE</div>
+      <nav id="mainNav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-page="regional"><span>⌖</span> Regional Comparison</button>
+        <button class="nav-item" data-page="environment"><span>☁</span> Environmental Analysis</button>
+        <button class="nav-item" data-page="prediction"><span>↗</span> Yield Prediction</button>
+        <button class="nav-item" data-page="data"><span>▤</span> Data Management</button>
+      </nav>
+      <div class="side-label admin-label">SYSTEM</div>
+      <button class="nav-item" data-page="admin"><span>⚙</span> Administrator</button>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">✦</div><strong>Grow with data</strong><p>Explore trends to support better agricultural decisions.</p></div>
+        <div class="profile"><div class="avatar">AN</div><div><strong>Analyst Demo</strong><small>Prototype mode</small></div><span class="online-dot"></span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="menu-toggle" id="openMenu" aria-label="Open menu">☰</button>
+        <div class="breadcrumbs"><span>AgriNepal</span><span class="crumb-slash">/</span><strong id="crumb">Dashboard</strong></div>
+        <div class="top-actions">
+          <label class="search-box"><span>⌕</span><input id="globalSearch" placeholder="Search crops, districts..." aria-label="Search crops and districts"></label>
+          <button class="icon-button notification" title="Notifications">♧<i></i></button>
+          <button class="user-chip" id="topAdmin"><span class="avatar small">AN</span><span>Analyst</span><span>⌄</span></button>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="page-view active" id="page-dashboard">
+          <div class="page-heading">
+            <div><div class="eyebrow"><span class="eyebrow-dot"></span> AGRICULTURE INTELLIGENCE</div><h1>Dashboard overview</h1><p>Explore crop production trends and environmental patterns across Nepal.</p></div>
+            <button class="btn btn-outline" id="exportBtn">↓ Export view</button>
+          </div>
+          <div class="filter-row">
+            <label class="filter-field"><span>Season</span><select id="seasonFilter"><option value="All">All seasons</option><option>Winter</option><option>Spring</option><option>Summer</option><option>Monsoon</option><option>Autumn</option></select></label>
+            <label class="filter-field"><span>Ecological region</span><select id="regionFilter"><option value="All">All regions</option><option>Mountain</option><option>Hill</option><option>Terai</option></select></label>
+            <label class="filter-field"><span>Crop</span><select id="cropFilter"><option value="All">All crops</option><option>Rice</option><option>Maize</option><option>Wheat</option><option>Potato</option><option>Sugarcane</option><option>Millet</option><option>Barley</option><option>Buckwheat</option><option>Oilseed</option></select></label>
+            <label class="filter-field"><span>Year (BS)</span><select id="yearFilter"><option value="All">All years</option><option>2081</option><option>2080</option><option>2079</option><option>2078</option><option>2077</option></select></label>
+          </div>
+          <div class="demo-note">DEMO DATA · Illustrative figures for interface demonstration, not official statistics.</div>
+          <div class="kpi-grid">
+            <article class="kpi-card"><div class="kpi-top"><span>Total crop types</span><span class="kpi-icon green">♧</span></div><div class="kpi-value" id="kpiCrops">9</div><div class="kpi-foot"><span class="trend up">↗ 2.4%</span><span>in demo dataset</span></div></article>
+            <article class="kpi-card"><div class="kpi-top"><span>Districts covered</span><span class="kpi-icon blue">⌖</span></div><div class="kpi-value" id="kpiDistricts">77</div><div class="kpi-foot"><span class="trend neutral">National scope</span></div></article>
+            <article class="kpi-card"><div class="kpi-top"><span>Production records</span><span class="kpi-icon amber">▤</span></div><div class="kpi-value" id="kpiRecords">6,930</div><div class="kpi-foot"><span class="trend up">↗ 8.1%</span><span>sample records</span></div></article>
+            <article class="kpi-card"><div class="kpi-top"><span>Climate records</span><span class="kpi-icon purple">☁</span></div><div class="kpi-value">10,032</div><div class="kpi-foot"><span class="trend neutral">Monthly observations</span></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel chart-panel wide">
+              <div class="panel-head"><div><h2>Crop production trends</h2><p>Illustrative production volume across recent fiscal years</p></div><select class="compact-select" id="trendPeriod"><option value="10">Last 10 years</option><option value="5">Last 5 years</option></select></div>
+              <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+            </article>
+            <article class="panel chart-panel">
+              <div class="panel-head"><div><h2>Production by region</h2><p>Share of sample production</p></div><button class="dots" title="Chart options">•••</button></div>
+              <div class="chart-wrap doughnut-wrap"><canvas id="regionChart"></canvas></div>
+              <div class="legend-list"><span><i class="legend-dot mountain"></i>Mountain <b>18.4%</b></span><span><i class="legend-dot hill"></i>Hill <b>45.7%</b></span><span><i class="legend-dot terai"></i>Terai <b>35.9%</b></span></div>
+            </article>
+            <article class="panel chart-panel">
+              <div class="panel-head"><div><h2>Top district yields</h2><p>Sample yield (MT/ha)</p></div></div>
+              <div class="chart-wrap"><canvas id="districtChart"></canvas></div>
+            </article>
+            <article class="panel chart-panel wide">
+              <div class="panel-head"><div><h2>Rainfall and temperature</h2><p>Monthly climate indicators with sample yield trend</p></div><span class="mini-tag">CLIMATE</span></div>
+              <div class="chart-wrap"><canvas id="climateChart"></canvas></div>
+            </article>
+            <article class="panel insight-panel">
+              <div class="panel-head"><div><h2>Quick insights</h2><p>Illustrative observations</p></div><span class="spark">✦</span></div>
+              <div class="insight"><span class="insight-icon">↗</span><div><strong>Production trend</strong><p>Rice remains a leading crop in this sample visualization.</p></div></div>
+              <div class="insight"><span class="insight-icon blue">☂</span><div><strong>Monsoon matters</strong><p>Rainfall patterns can influence crop growth and yield.</p></div></div>
+              <div class="insight"><span class="insight-icon orange">♨</span><div><strong>Monitor temperature</strong><p>Compare seasonal temperatures with crop outcomes.</p></div></div>
+              <div class="insight"><span class="insight-icon green">♧</span><div><strong>Regional differences</strong><p>Compare ecological zones before drawing conclusions.</p></div></div>
+            </article>
+            <article class="panel table-panel wide">
+              <div class="panel-head"><div><h2>Recent production records</h2><p>Sample records · use filters to explore</p></div><button class="text-button" data-goto="data">View all records →</button></div>
+              <div class="table-scroll"><table><thead><tr><th>Year (BS)</th><th>District</th><th>Region</th><th>Crop</th><th>Area (ha)</th><th>Production (MT)</th><th>Yield (MT/ha)</th></tr></thead><tbody id="recentTable"></tbody></table></div>
+            </article>
+          </div>
+          <footer class="footer"><span>AgriNepal · Crop Production & Environmental Analysis</span><span>College project prototype · v1.0</span></footer>
+        </section>
+
+        <section class="page-view" id="page-regional">
+          <div class="page-heading"><div><div class="eyebrow">GEOGRAPHIC INSIGHTS</div><h1>Regional comparison</h1><p>Compare crop productivity and production patterns across ecological regions.</p></div><button class="btn btn-outline" id="regionalExport">↓ Export view</button></div>
+          <div class="demo-note">DEMO DATA · Replace illustrative values with verified database records.</div>
+          <div class="kpi-grid three"><article class="kpi-card"><div class="kpi-top"><span>Highest sample production</span><span class="kpi-icon green">♧</span></div><div class="kpi-value">Terai</div><div class="kpi-foot">Illustrative regional result</div></article><article class="kpi-card"><div class="kpi-top"><span>Regions compared</span><span class="kpi-icon blue">⌖</span></div><div class="kpi-value">3</div><div class="kpi-foot">Mountain · Hill · Terai</div></article><article class="kpi-card"><div class="kpi-top"><span>Comparison metric</span><span class="kpi-icon amber">↗</span></div><div class="kpi-value">MT/ha</div><div class="kpi-foot">Yield per hectare</div></article></div>
+          <div class="dashboard-grid"><article class="panel chart-panel wide"><div class="panel-head"><div><h2>Crop output by region</h2><p>Illustrative production totals</p></div></div><div class="chart-wrap tall"><canvas id="regionalBarChart"></canvas></div></article><article class="panel chart-panel"><div class="panel-head"><div><h2>Regional share</h2><p>Sample production distribution</p></div></div><div class="chart-wrap"><canvas id="regionalDonut"></canvas></div></article><article class="panel table-panel wide"><div class="panel-head"><div><h2>Regional summary</h2><p>Example comparison table</p></div></div><div class="table-scroll"><table><thead><tr><th>Region</th><th>Sample production (MT)</th><th>Average yield (MT/ha)</th><th>Primary comparison</th></tr></thead><tbody><tr><td>Mountain</td><td>128,400</td><td>2.8</td><td>Cooler climate</td></tr><tr><td>Hill</td><td>318,900</td><td>3.4</td><td>Mixed terrain</td></tr><tr><td>Terai</td><td>420,700</td><td>4.1</td><td>Lowland agriculture</td></tr></tbody></table></div></article></div>
+        </section>
+
+        <section class="page-view" id="page-environment">
+          <div class="page-heading"><div><div class="eyebrow">CLIMATE INTELLIGENCE</div><h1>Environmental analysis</h1><p>Explore rainfall, temperature, humidity, and solar radiation indicators.</p></div><button class="btn btn-outline" id="climateExport">↓ Export view</button></div>
+          <div class="demo-note">DEMO DATA · These charts demonstrate presentation only and do not establish real climate-crop relationships.</div>
+          <div class="kpi-grid"><article class="kpi-card"><div class="kpi-top"><span>Average temperature</span><span class="kpi-icon orange">♨</span></div><div class="kpi-value">22.6°C</div><div class="kpi-foot">Illustrative annual average</div></article><article class="kpi-card"><div class="kpi-top"><span>Annual rainfall</span><span class="kpi-icon blue">☂</span></div><div class="kpi-value">1,245 mm</div><div class="kpi-foot">Illustrative sample</div></article><article class="kpi-card"><div class="kpi-top"><span>Mean humidity</span><span class="kpi-icon purple">◌</span></div><div class="kpi-value">76%</div><div class="kpi-foot">Illustrative sample</div></article><article class="kpi-card"><div class="kpi-top"><span>Climate variables</span><span class="kpi-icon green">☼</span></div><div class="kpi-value">6</div><div class="kpi-foot">Temperature, rainfall, humidity, solar radiation</div></article></div>
+          <div class="dashboard-grid"><article class="panel chart-panel wide"><div class="panel-head"><div><h2>Monthly climate patterns</h2><p>Rainfall and mean temperature</p></div></div><div class="chart-wrap tall"><canvas id="environmentChart"></canvas></div></article><article class="panel chart-panel"><div class="panel-head"><div><h2>Seasonal rainfall</h2><p>Illustrative total (mm)</p></div></div><div class="chart-wrap"><canvas id="seasonChart"></canvas></div></article><article class="panel table-panel wide"><div class="panel-head"><div><h2>Environmental variables</h2><p>Fields available in the project data model</p></div></div><div class="table-scroll"><table><thead><tr><th>Variable</th><th>Unit</th><th>Potential analysis</th></tr></thead><tbody><tr><td>Mean temperature</td><td>°C</td><td>Seasonal temperature trends</td></tr><tr><td>Maximum / minimum temperature</td><td>°C</td><td>Temperature range</td></tr><tr><td>Total rainfall</td><td>mm</td><td>Monthly and seasonal rainfall</td></tr><tr><td>Mean humidity</td><td>%</td><td>Humidity variation</td></tr><tr><td>Total solar radiation</td><td>Data-dependent</td><td>Solar radiation trends</td></tr></tbody></table></div></article></div>
+        </section>
+
+        <section class="page-view" id="page-prediction">
+          <div class="page-heading"><div><div class="eyebrow">DECISION SUPPORT</div><h1>Yield prediction</h1><p>Explore a simple illustrative yield estimate from area and production inputs.</p></div><span class="mini-tag">DEMO MODEL</span></div>
+          <div class="demo-note">This is a demonstration calculator, not a trained machine-learning model. Do not use its result for real agricultural decisions.</div>
+          <div class="prediction-layout"><article class="panel prediction-form"><div class="panel-head"><div><h2>Estimate crop yield</h2><p>Enter sample crop information</p></div><span class="kpi-icon green">↗</span></div><form id="predictionForm"><label>Crop<select id="predCrop"><option>Rice</option><option>Maize</option><option>Wheat</option><option>Potato</option><option>Sugarcane</option><option>Millet</option></select></label><label>District<select id="predDistrict"><option>Chitwan</option><option>Jhapa</option><option>Sunsari</option><option>Kaski</option><option>Bardiya</option></select></label><div class="form-two"><label>Area (hectares)<input id="predArea" type="number" min="0.1" step="0.1" value="10" required></label><label>Production (metric tons)<input id="predProduction" type="number" min="0" step="0.1" value="35" required></label></div><label>Season<select id="predSeason"><option>Monsoon</option><option>Winter</option><option>Spring</option><option>Summer</option><option>Autumn</option></select></label><button class="btn btn-primary full" type="submit">Calculate illustrative yield →</button></form></article><article class="panel prediction-result"><div class="result-art">🌱</div><div class="eyebrow">CALCULATION RESULT</div><h2 id="predictionTitle">Estimated yield</h2><div class="result-value" id="yieldResult">3.50 <small>MT/ha</small></div><p id="yieldExplanation">Yield is calculated as production divided by area using the inputs shown.</p><div class="result-divider"></div><div class="result-row"><span>Crop</span><strong id="resultCrop">Rice</strong></div><div class="result-row"><span>District</span><strong id="resultDistrict">Chitwan</strong></div><div class="result-row"><span>Area</span><strong id="resultArea">10 ha</strong></div><div class="result-row"><span>Production</span><strong id="resultProduction">35 MT</strong></div><div class="result-caution">For academic demonstration only. This calculator derives yield from provided values; it does not forecast future production.</div></article></div>
+        </section>
+
+        <section class="page-view" id="page-data">
+          <div class="page-heading"><div><div class="eyebrow">DATA OPERATIONS</div><h1>Production data management</h1><p>Review the example records and add demonstration entries.</p></div><button class="btn btn-primary" id="addRecordBtn">＋ Add record</button></div>
+          <div class="demo-note">DEMO MODE · Records are stored only in this page session and are not saved to MySQL.</div>
+          <div class="data-toolbar"><label class="search-box table-search"><span>⌕</span><input id="tableSearch" placeholder="Search records..." aria-label="Search records"></label><select id="tableCropFilter"><option value="All">All crops</option><option>Rice</option><option>Maize</option><option>Wheat</option><option>Potato</option><option>Sugarcane</option></select><button class="btn btn-outline" id="dataExport">↓ Export CSV</button></div>
+          <article class="panel table-panel"><div class="panel-head"><div><h2>Production records</h2><p id="recordCount">Showing sample records</p></div><span class="mini-tag">SAMPLE DATA</span></div><div class="table-scroll"><table><thead><tr><th>Year (BS)</th><th>District</th><th>Region</th><th>Crop</th><th>Area (ha)</th><th>Production (MT)</th><th>Yield (MT/ha)</th><th>Action</th></tr></thead><tbody id="allRecordsTable"></tbody></table></div></article>
+          <div class="panel admin-tip"><strong>Database integration next:</strong> Connect this interface to your Python API and MySQL database before presenting it as a fully functional data management system.</div>
+        </section>
+
+        <section class="page-view" id="page-admin">
+          <div class="page-heading"><div><div class="eyebrow">SYSTEM CONTROL</div><h1>Administrator console</h1><p>Prototype administration tools and system overview.</p></div><span class="status-pill">● Demo mode</span></div>
+          <div class="warning-box"><strong>Prototype notice</strong><p>This admin screen is for demonstration. It does not authenticate users or enforce server-side permissions. Connect it to a secure backend before using real data.</p></div>
+          <div class="kpi-grid three"><article class="kpi-card"><div class="kpi-top"><span>Sample records</span><span class="kpi-icon green">▤</span></div><div class="kpi-value" id="adminRecordCount">8</div><div class="kpi-foot">Loaded in browser</div></article><article class="kpi-card"><div class="kpi-top"><span>Admin accounts</span><span class="kpi-icon blue">♙</span></div><div class="kpi-value">1 demo</div><div class="kpi-foot">Not connected to authentication</div></article><article class="kpi-card"><div class="kpi-top"><span>Database status</span><span class="kpi-icon amber">◌</span></div><div class="kpi-value">Offline</div><div class="kpi-foot">MySQL not connected</div></article></div>
+          <div class="admin-grid"><article class="panel"><div class="panel-head"><div><h2>Data management</h2><p>Open a module</p></div></div><div class="admin-action-list"><button data-goto="data"><span class="action-icon">▤</span><span><strong>Production records</strong><small>Add or remove demo records</small></span><b>→</b></button><button data-goto="environment"><span class="action-icon blue">☁</span><span><strong>Climate data</strong><small>Review environmental fields</small></span><b>→</b></button><button data-goto="regional"><span class="action-icon orange">⌖</span><span><strong>Districts and regions</strong><small>Review comparison views</small></span><b>→</b></button></div></article><article class="panel"><div class="panel-head"><div><h2>System checklist</h2><p>Items to complete for production readiness</p></div></div><div class="check-list"><div><span class="check pending">!</span><span><strong>Backend authentication</strong><small>Not implemented</small></span></div><div><span class="check pending">!</span><span><strong>MySQL API integration</strong><small>Not implemented</small></span></div><div><span class="check done">✓</span><span><strong>Responsive frontend</strong><small>Included in this prototype</small></span></div><div><span class="check done">✓</span><span><strong>Interactive demo charts</strong><small>Included in this prototype</small></span></div></div></article></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="recordModal">
+    <div class="modal">
+      <div class="modal-head"><div><h2>Add production record</h2><p>Temporary demonstration entry</p></div><button class="icon-button" id="closeModal" aria-label="Close">×</button></div>
+      <form id="recordForm"><div class="form-two"><label>Year (BS)<input id="newYear" type="number" min="2000" max="2100" value="2081" required></label><label>District<input id="newDistrict" value="Chitwan" required></label></div><div class="form-two"><label>Region<select id="newRegion"><option>Terai</option><option>Hill</option><option>Mountain</option></select></label><label>Crop<select id="newCrop"><option>Rice</option><option>Maize</option><option>Wheat</option><option>Potato</option><option>Sugarcane</option><option>Millet</option></select></label></div><div class="form-two"><label>Area (ha)<input id="newArea" type="number" min="0.1" step="0.1" value="10" required></label><label>Production (MT)<input id="newProduction" type="number" min="0" step="0.1" value="35" required></label></div><div class="modal-actions"><button class="btn btn-outline" type="button" id="cancelModal">Cancel</button><button class="btn btn-primary" type="submit">Add record</button></div></form>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
